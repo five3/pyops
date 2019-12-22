@@ -10,8 +10,8 @@ import pyops
 # twine upload dist/*0.1.4*
 
 setup(
-    name="ahAPICore",
-    version=ahAPICore.__version__,
+    name="py-ops",
+    version=pyops.__version__,
     keywords=("python unit testing", "auto testing", "keyword base framework", "BDD testing"),
     description="a python base auto testing framework that programming oriented with Structured Language.",
     long_description="",

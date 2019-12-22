@@ -19,7 +19,7 @@
 
 ## 环境安装
 ```bash
-pip install pyops
+pip install py-ops
 ```
 或者使用下面命令安装最细版：
 ```bash
