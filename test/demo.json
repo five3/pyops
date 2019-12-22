@@ -1,0 +1,32 @@
+{
+  "name": "TestDemo",
+  "desc": "background",
+  "tag": "clues",
+  "setup_class": ["ext.sub_setup_class"],
+  "teardown_class": ["ext.sub_teardown_class"],
+  "test_path": [],
+  "cases": {
+    "test_001": {
+      "desc": "",
+      "tags": [""],
+      "setup": ["ext.demo.sub_setup"],
+      "teardown": ["ext.demo.sub_teardown"],
+      "data": "ext.demo.sub_data",
+      "flow": ["调用sub"],
+      "check": ["ext.check"]
+      },
+    "test_002": {
+      "desc": "",
+      "tags": [""],
+      "setup": [],
+      "teardown": [],
+      "data": {
+        "x": 5,
+        "y": 1,
+        "expect": 6
+      },
+      "flow": ["ext.call_add"],
+      "check": ["ext.check"]
+      }
+  }
+}
