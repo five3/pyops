@@ -32,7 +32,7 @@ setup(
     install_requires=[      # 需要安装的依赖包
         'pytest>=5.0.1',
         'pytestreport>=0.1.9.3',
-        "Jinjia2>=2.10"
+        "Jinjia2>=2.10.1"
     ],
     scripts=[],             # 安装时复制到PATH路径的脚本文件
     entry_points={
