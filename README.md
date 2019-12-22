@@ -66,7 +66,7 @@ def check_add(data):
 	"cases": {
 		"test_add": {
 			"desc": "",
-			"tag": [],
+			"tags": [],
 			"setup": [],
 			"teardown": [],
 			"data": {
