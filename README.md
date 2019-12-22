@@ -17,21 +17,18 @@
 
 ## 环境安装
 ```bash
-git clone https://git.corpautohome.com/ad-qa/ah-api-core.git
-cd ah-api-core
-pip install -r requirements.txt
-python setup.py install
+pip install pyops
 ```
-或者
+或者使用下面命令安装最细版：
 ```bash
-pip install git+https://git.corpautohome.com/ad-qa/ah-api-core.git
+pip install git+https://github.com/five3/pyops.git
 ```
 
 ## 快速开始
 使用该框架非常的方便，基本没有学习成本。首先新建一个目录作为自动化项目的根目录，然后再新建一个名为`ah_ext`的python包目录，并在`__init__.py`文件中编写如下内容。
 ```python
 import logging
-from ahAPICore.decorator import (make_check, make_flow, alias)
+from pyops.decorator import (make_check, make_flow, alias)
 
 logger = logging.getLogger()
 
@@ -42,11 +39,17 @@ def add(x, y):
 @alias('调用add')
 @make_flow
 def call_add(data):
+    """
+        data: 即json配置文件中的case节点下对应data字典对象
+    """
     data['actual'] = add(data['x'], data['y'])
 
 @alias('检查add')
 @make_check
 def check_add(data):
+    """
+        data: 即json配置文件中的case节点下对应data字典对象
+    """
     return data['actual'] == data['expect']
 ```
 
@@ -55,7 +58,7 @@ def check_add(data):
 {
 	"name": "TestDemo",
 	"desc": ".....background......",
-	"tag": ["smoking_test"],
+	"tag": "smoking_test",
 	"setup_class": [],
 	"teardown_class": [],
 	"cases": {
@@ -75,23 +78,17 @@ def check_add(data):
 	}
 }
 ```
-同时创建一个名为`demo.py`的python文件，其内容如下（该文件后期可以省略，有框架自动生成）：
-```python
-import pytest
-import logging
-from ahAPICore.main import *
-
-logger = logging.getLogger()
-
-class TestDemo:
-    def test_add(self, class_init, class_dest, init, dest, test_data, test_flow, test_check):
-        logger.info(f'......do testing for test_001.......')
-
-
-if __name__ == "__main__":
-    pytest.main(["-s", "demo.py", "--force_run", "--pytest_report", "report.html"])
+在项目根目录执行如下命令运行测试：
+```bash
+pyops run
 ```
-在命令行直接执行该文件，即可运行测试并在当前目录输出测试报告和日志文件。
+该命令默认会执行当前目录先全部的json用例文件，如果你希望只执行部分的json用例，则可以指定特定的文件名：
+```bash
+pyops run demo.jsom demo2.json
+```
+另外，在执行完该命令后会在当前目录生成一个对应名称的py文件，如：demo.py。这个执行测试流程中的产物，也是执行测试的真正入口点。如果你希望单独生成一个py用例文件，可以使用下面的命令：
+```bash
+pyops make demo.json
+```
 
 ## 框架设计结构
-![](http://pcma.corpautohome.com/docs/_images/apic.png)
