@@ -1,5 +1,5 @@
 import logging
-from ahAPICore.decorator import (make_flow, make_setup_class, make_teardown_class,
+from pyops.decorator import (make_flow, make_setup_class, make_teardown_class,
                                  make_setup, make_teardown, make_data, make_flow, alias)
 
 logger = logging.getLogger()

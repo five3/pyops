@@ -1,6 +1,6 @@
 import time
 import logging
-from ahAPICore.decorator import (make_check, make_flow, alias)
+from pyops.decorator import (make_check, make_flow, alias)
 
 logger = logging.getLogger()
 

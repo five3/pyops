@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 from setuptools import setup, find_packages
-import ahAPICore
+import pyops
 
 # python setup.py sdist
 # python setup.py bdist
