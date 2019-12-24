@@ -1,11 +1,12 @@
-py-ops: python base test framework work with keyword™
-======================================================
+py-ops: 一款面向编程的Python关键字测试框架™
+============================================
 
 .. image:: https://www.testqa.cn/static/banner.png
 
 ☤ 说明
 ------
-这是一款基于`pytest`封装，同时支持`关键字`和`BDD`，测试数据分离，面向编程，轻量级的，对上层自动化应用友好的基础测试框架。
+
+这是一款基于``pytest``封装，同时支持``关键字``和``BDD``，测试数据分离，面向编程，轻量级的，对上层自动化应用友好的基础测试框架。
 
 其主要核心功能：
 
@@ -15,17 +16,18 @@ py-ops: python base test framework work with keyword™
 
 该框架的主要特点：
 
-- 基于`pytest`框架开发，支持原生插件
-- 同时具备`关键字`和`BDD`框架的特点
+- 基于``pytest``框架开发，支持原生插件
+- 同时具备``关键字``和``BDD``框架的特点
 - 无二次学习成本(Python|json)
-- 天然支持`测试数据分离`与传递
+- 天然支持``测试数据分离``与传递
 - 对上层应用提供友好的封装接口
-- 支持脚本`Debug`调试
+- 支持脚本``Debug``调试
 - 代码量少(7个文件500行代码)
 
 
 ☤ 环境安装
 ----------
+
 .. code:: bash
 
     pip install py-ops
@@ -40,7 +42,9 @@ py-ops: python base test framework work with keyword™
 
 ☤ 快速开始
 ----------
-使用该框架非常的方便，基本没有学习成本。首先新建一个目录作为自动化项目的根目录，然后再新建一个名为`ah_ext`的python包目录，并在`__init__.py`文件中编写如下内容。
+
+使用该框架非常的方便，基本没有学习成本。首先新建一个目录作为自动化项目的根目录，
+然后再新建一个名为```ah_ext``的python包目录，并在``__init__.py``文件中编写如下内容。
 
 .. code:: python
 
@@ -104,17 +108,21 @@ py-ops: python base test framework work with keyword™
 
     pyops run
 
-该命令默认会执行当前目录先全部的json用例文件，如果你希望只执行部分的json用例，则可以指定特定的文件名：
+该命令默认会执行当前目录先全部的``json用例``文件，如果你希望只执行部分的``json用例``，则可以指定特定的文件名：
 
 .. code:: bash
 
     pyops run demo.jsom demo2.json
 
-另外，在执行完该命令后会在当前目录生成一个对应名称的py文件，如：demo.py。这个执行测试流程中的产物，也是执行测试的真正入口点。如果你希望单独生成一个py用例文件，可以使用下面的命令：
+另外，在执行完该命令后会在当前目录生成一个对应名称的py文件，如：``demo.py``。
+这个执行测试流程中的产物，也是执行测试的真正入口点。
+如果你希望单独生成一个py用例文件，可以使用下面的命令：
 
 .. code:: bash
 
     pyops make demo.json
 
 
-## 框架设计结构
+☤ 框架设计结构
+--------------
+.. image:: https://www.testqa.cn/static/banner.png
