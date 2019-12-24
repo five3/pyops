@@ -9,12 +9,17 @@ import pyops
 # python setup.py bdist_wheel
 # twine upload dist/*0.1.4*
 
+
+def read(f):
+    return open(f, encoding='utf-8').read()
+
+
 setup(
     name="py-ops",
     version=pyops.__version__,
     keywords=("python unit testing", "auto testing", "keyword base framework", "BDD testing"),
     description="a python base auto testing framework that programming oriented with Structured Language.",
-    long_description="",
+    long_description=read('README.rst'),
     license="MIT V3",
 
     url="https://github.com/five3/pyops.git",

@@ -2,5 +2,5 @@
 **/__pycache__
 build
 *.egg-info
-.log
+*.log
 dist
