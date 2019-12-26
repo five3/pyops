@@ -7,12 +7,11 @@ logger = logging.getLogger()
 
 def sub(x, y):
     print('....sub....')
-    logger.debug("-" * 100)
     return x - y
 
 
 def add(x, y):
-    print('add')
+    print('....add....')
     return x + y
 
 
@@ -21,6 +20,7 @@ def call_add(data):
     data['actual'] = add(data['x'], data['y'])
 
 
+@alias('sub测试数据')
 @make_data
 def sub_data(req):
     return {
@@ -34,28 +34,26 @@ def sub_data(req):
 @make_flow
 def call_sub(data):
     data['actual'] = sub(data['x'], data['y'])
-    req = data['req']
-    print(f'test config print in call_sub {req.config.get_class_config(req, "ah_name")}')
 
 
+@alias("用例初始化")
 @make_setup
-def sub_setup(data):
+def setup(data):
     print(f'test_data print in setup {data}')
 
 
+@alias("用例清理")
 @make_teardown
-def sub_teardown(data):
+def teardown(data):
     print(f'test_data print in teardown {data}')
 
 
+@alias('套件初始化')
 @make_setup_class
 def sub_setup_class(req):
     print(f'....print in class_setup....')
-    req.config.set_class_config(req, 'ah_name', 'atmp')
 
 
 @make_teardown_class
 def sub_teardown_class(req):
     print(f'....print in class_teardown....')
-    ah_name = req.config.get_class_config(req, 'ah_name')
-    print(f'....ah_name is {ah_name}')

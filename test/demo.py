@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*- 
 import pytest
 import logging
+import subprocess
 from pyops.main import *
 
 logger = logging.getLogger()
@@ -18,4 +19,4 @@ class TestDemo:
 
 
 if __name__ == "__main__":
-    pytest.main(["-s", "demo.py", "--pytest_report", "report.html"])
+    subprocess.call(['pytest', "-s", "demo.py", "--pytest_report", "report.html"])

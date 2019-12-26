@@ -2,30 +2,30 @@
   "name": "TestDemo",
   "desc": "background",
   "tag": "clues",
-  "setup_class": ["ext.sub_setup_class"],
-  "teardown_class": ["ext.sub_teardown_class"],
+  "setup_class": ["套件初始化"],
+  "teardown_class": ["ah_ext.sub_teardown_class"],
   "test_path": [],
   "cases": {
     "test_001": {
-      "desc": "",
+      "desc": "关键字场景样例，前提是需要给对应的函数加上@alias装饰器",
       "tags": [""],
-      "setup": ["ext.demo.sub_setup"],
-      "teardown": ["ext.demo.sub_teardown"],
-      "data": "ext.demo.sub_data",
+      "setup": ["用例初始化"],
+      "teardown": ["用例清理"],
+      "data": "sub测试数据",
       "flow": ["调用sub"],
-      "check": ["ext.check"]
+      "check": ["默认检查"]
       },
     "test_002": {
-      "desc": "",
+      "desc": "函数路径场景样例，这种方式是默认支持的，这里的每一个函数路径与test_001中的关键字是等效的",
       "tags": [""],
-      "setup": [],
-      "teardown": [],
+      "setup": ["ah_ext.setup"],
+      "teardown": ["ah_ext.teardown"],
       "data": {
         "x": 5,
         "y": 1,
         "expect": 6
       },
-      "flow": ["ext.call_add"],
+      "flow": ["ah_ext.call_add"],
       "check": ["ext.check"]
       }
   }
