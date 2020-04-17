@@ -5,6 +5,9 @@
   "setup_class": ["套件初始化"],
   "teardown_class": ["ah_ext.sub_teardown_class"],
   "test_path": [],
+  "env": {
+    "keyword": "action"
+  },
   "cases": {
     "test_001": {
       "desc": "关键字场景样例，前提是需要给对应的函数加上@alias装饰器",

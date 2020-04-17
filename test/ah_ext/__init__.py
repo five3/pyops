@@ -16,7 +16,8 @@ def add(x, y):
 
 
 @make_flow
-def call_add(data):
+def call_add(data, req):
+    print(req.get_global('name'))
     data['actual'] = add(data['x'], data['y'])
 
 
@@ -32,28 +33,34 @@ def sub_data(req):
 
 @alias('调用sub')
 @make_flow
-def call_sub(data):
+def call_sub(data, req):
+    print(req.get_global('name'))
+    print(req.get_global('keyword'))
     data['actual'] = sub(data['x'], data['y'])
 
 
 @alias("用例初始化")
 @make_setup
-def setup(data):
+def setup(data, req):
+    print(req.get_global('name'))
     print(f'test_data print in setup {data}')
 
 
 @alias("用例清理")
 @make_teardown
-def teardown(data):
+def teardown(data, req):
+    print(req.get_global('name'))
     print(f'test_data print in teardown {data}')
 
 
 @alias('套件初始化')
 @make_setup_class
 def sub_setup_class(req):
+    req.set_global('name', 'pyops')
     print(f'....print in class_setup....')
 
 
 @make_teardown_class
 def sub_teardown_class(req):
+    print(req.get_global('name'))
     print(f'....print in class_teardown....')

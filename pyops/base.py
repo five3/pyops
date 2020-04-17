@@ -1,6 +1,6 @@
 import logging
 from .libs import all_data
-
+from .py_request import PyRequest
 
 logger = logging.getLogger()
 logger.info(f'collect data: {all_data}')
@@ -34,15 +34,10 @@ def base_verify(func_name, cls, module, req):
     if not case:
         raise ValueError(f'EEEEEEEEE..case {func_name} not found in json..EEEEEEEEE')
     elif req.config.getoption('--force_run', None):
-        data = case.setdefault('data', {})
-        data['GLOBAL_ENV'] = case.get('env', {})
         return case
     elif case.get('disable', False):
         logger.warning(f'WWWWWWW..case {func_name} disabled in json..WWWWWWW')
         return None
-
-    data = case.setdefault('data', {})
-    data['GLOBAL_ENV'] = case.get('env', {})
 
     return case
 
@@ -84,7 +79,7 @@ def get_data_by_func_name(func_name, cls, module, req):
         req.case_func = all_data['case_func']
         func = req.case_func.get(data)
         if func and callable(func) and 'data' in func.ah_type:
-            data = func(req)
+            data = func(PyRequest(req))
         else:
             raise ValueError(f'EEEEEEEEE..data function {data} not found or can not called..EEEEEEEEE')
 
@@ -130,27 +125,3 @@ def get_class_dest_by_name(cls, module, req):
 def get_global_config(cls, module, req):
     cls_info = cls_verify(cls, module, req)
     return cls_info.get('env', {}) if cls_info else {}
-
-
-def get_class_config(req, key):
-    ah_config = getattr(req.config, 'ah_class_config')
-    if ah_config:
-        return ah_config.get(key)
-
-
-def set_class_config(req, key, value):
-    ah_config = getattr(req.config, 'ah_class_config')
-    if ah_config:
-        ah_config[key] = value
-
-
-def del_class_config(req, key):
-    ah_config = getattr(req.config, 'ah_class_config')
-    if key in ah_config:
-        del ah_config[key]
-
-
-def clear_class_config(req):
-    ah_config = getattr(req.config, 'ah_class_config')
-    if ah_config:
-        ah_config = {}
