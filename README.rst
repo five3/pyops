@@ -1,7 +1,7 @@
 py-ops: 一款面向编程的Python关键字测试框架™
 ============================================
 
-.. image:: https://raw.githubusercontent.com/five3/pyops/master/image/testqa.png
+.. image:: https://raw.githubusercontent.com/five3/pyops/master/images/testqa.png
 
 ☤ 说明
 ------
@@ -108,7 +108,7 @@ json文件中还可以对象case配置disable字段，为true时则默认不会�
 
 ☤ 框架设计结构
 --------------
-.. image:: https://raw.githubusercontent.com/five3/pyops/master/image/apic.png
+.. image:: https://raw.githubusercontent.com/five3/pyops/master/images/apic.png
 
 
 ☤ 自动生成用例说明
