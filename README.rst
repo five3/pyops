@@ -50,7 +50,7 @@ py-ops: 一款面向编程的Python关键字测试框架™
     pyops startproject test1
 
 
-命令执行完成之后，会在当前目录创建一个``test1``目录，具体的目录结构如下：
+命令执行完成之后，会在当前目录创建一个[test1]目录，具体的目录结构如下：
 
 .. code:: bash
 
@@ -67,7 +67,7 @@ py-ops: 一款面向编程的Python关键字测试框架™
     pyops run
 
 
-该命令默认会执行当前目录先全部的``json用例``文件，如果你希望只执行部分的``json用例``，则可以指定特定的文件名：
+该命令默认会执行当前目录先全部的json用例文件，如果你希望只执行部分的json用例，则可以指定特定的文件名：
 
 .. code:: bash
 
@@ -88,8 +88,8 @@ py-ops: 一款面向编程的Python关键字测试框架™
         |-- std.log
 
 
-其中``demo.py``是由json文件生成的同名用例文件，这个是执行测试流程中的产物，也是执行测试的真正入口点。
-``report.html``是测试报告，``std.log``则是测试的详细日志，``pytest.ini``自动生成的pytest配置文件。
+其中demo.py是由json文件生成的同名用例文件，这个是执行测试流程中的产物，也是执行测试的真正入口点。
+report.html是测试报告，std.log则是测试的详细日志，pytest.ini自动生成的pytest配置文件。
 
 如果你希望单独生成一个py用例文件，可以使用下面的命令：
 
@@ -98,13 +98,22 @@ py-ops: 一款面向编程的Python关键字测试框架™
     pyops make demo.json
 
 
-json文件中还可以对象case配置disable字段，为true时则默认不会执行，不填时默认为false。
-如果期望强制运行disable为true的用例，可以使用forcerun命令。
+json文件中还可以对case配置disable字段，为true时则不会执行，不填时默认为false。
+如果希望强制运行disable为true的用例，可以使用forcerun命令。
 
 .. code:: bash
 
     pyops forcerun
 
+
+当然，你也可以通过原生的pytest命令来执行，前提是已经通过make、run命令生成了py文件。比如：
+
+.. code:: bash
+
+    pytest demo.py::test_cls_name::test_case_name -s -v --force_run --pytest_report report.html
+
+
+其中-s、-v是pytest原生的参数，--force_run是pyops插件参数，--pytest_report则是PyTestReport插件参数。
 
 ☤ 框架设计结构
 --------------
@@ -113,7 +122,7 @@ json文件中还可以对象case配置disable字段，为true时则默认不会�
 
 ☤ 自动生成用例说明
 ------------------
-自动生成的``demo.json``测试用例内容如下：
+自动生成的demo.json测试用例内容如下：
 
 .. code:: bash
 

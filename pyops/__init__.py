@@ -116,13 +116,13 @@ def check_add(data):
 
 def run(args):
     case_files = make(args)
-    args = ["pytest"] + case_files + ["-s", "--pytest_report", "report.html"]
+    args = ["pytest"] + case_files + ["-s", "-v" "--pytest_report", "report.html"]
     subprocess.call(args)
 
 
 def force_run(args):
     case_files = make(args)
-    args = ["pytest"] + case_files + ["-s", "--force_run", "--pytest_report", "report.html"]
+    args = ["pytest"] + case_files + ["-s", "-v", "--force_run", "--pytest_report", "report.html"]
     subprocess.call(args)
 
 

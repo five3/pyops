@@ -20,6 +20,7 @@ setup(
     keywords=["python unit testing", "auto testing", "keyword base framework", "BDD testing"],
     description="a python base auto testing framework that programming oriented with Structured Language.",
     long_description=read('README.rst'),
+    long_description_content_type="text/x-rst",
     license="MIT V3",
 
     url="https://github.com/five3/pyops.git",
