@@ -1,4 +1,5 @@
 import pytest
+import types
 import logging
 from .base import *
 
@@ -122,13 +123,13 @@ def class_init(request):
 
     logger.info(f'run setup_class => [{module}.{cls}]')
     dest = get_class_init_by_name(cls, module, request)
-    # 初始化全局设置
+    # 初始化全局变量
     request.config.ah_class_config = get_global_config(cls, module, request)
-    # 绑定全局设置方法
-    request.get_global = get_class_config
-    request.set_global = set_class_config
-    request.del_global = del_class_config
-    request.clear_global = clear_class_config
+    # 绑定全局变量方法
+    request.get_global = types.MethodType(get_class_config, request)
+    request.set_global = types.MethodType(set_class_config, request)
+    request.del_global = types.MethodType(del_class_config, request)
+    request.clear_global = types.MethodType(clear_class_config, request)
 
     for f in dest:
         status = f(request)

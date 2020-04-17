@@ -122,14 +122,14 @@ def get_class_init_by_name(cls, module, req):
     return get_func(cls_info, 'setup_class')
 
 
-def get_global_config(cls, module, req):
-    cls_info = cls_verify(cls, module, req)
-    return cls_info.get('env', {}) if cls_info else {}
-
-
 def get_class_dest_by_name(cls, module, req):
     cls_info = cls_verify(cls, module, req)
     return get_func(cls_info, 'teardown_class')
+
+
+def get_global_config(cls, module, req):
+    cls_info = cls_verify(cls, module, req)
+    return cls_info.get('env', {}) if cls_info else {}
 
 
 def get_class_config(req, key):
