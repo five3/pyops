@@ -11,7 +11,7 @@ def post_common(data):
     logger.info(f'request data "{data}"')
     try:
         if data['method'] == 'GET':
-            rep = requests.get(data['url'], data=data['body'], headers=data['headers'])
+            rep = requests.get(data['url'], params=data['body'], headers=data['headers'])
         elif data['method'] == 'POST':
             content_type = [v for k, v in data['headers'].items() if k.lower() == 'content_type']
             if content_type and 'json' in content_type[0]:
