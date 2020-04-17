@@ -169,6 +169,8 @@ def start_project(args):
     with open(os.path.join(project_name, 'demo.json'), 'w', encoding='utf-8') as f:
         f.write(__JSON_TMPL__)
 
+    print(f'创建项目 {project_name} 成功!')
+
 
 def get_files():
     sub_files = os.listdir(os.getcwd())
