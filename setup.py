@@ -17,7 +17,7 @@ def read(f):
 setup(
     name="py-ops",
     version=pyops.__version__,
-    keywords=("python unit testing", "auto testing", "keyword base framework", "BDD testing"),
+    keywords=["python unit testing", "auto testing", "keyword base framework", "BDD testing"],
     description="a python base auto testing framework that programming oriented with Structured Language.",
     long_description=read('README.rst'),
     license="MIT V3",
@@ -37,7 +37,6 @@ setup(
     install_requires=[      # 需要安装的依赖包
         'pytest>=5.0.1',
         'pytestreport>=0.1.9.3',
-        "Jinja2>=2.10.1"
     ],
     scripts=[],             # 安装时复制到PATH路径的脚本文件
     entry_points={

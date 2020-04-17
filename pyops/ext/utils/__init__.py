@@ -1,4 +1,3 @@
-import json
 import time
 import datetime
 import logging
@@ -6,21 +5,6 @@ import requests
 import traceback
 
 logger = logging.getLogger()
-
-
-def get_config(req, k):
-    config = req.config
-    return config.get_class_config(config, k)
-
-
-def set_config(req, k, v):
-    config = req.config
-    return config.set_class_config(config, k, v)
-
-
-def del_config(req, k):
-    config = req.config
-    return config.del_class_config(config, k)
 
 
 def post_common(data):
@@ -59,15 +43,15 @@ def today():
 
 
 def yesterday():
-    today = datetime.date.today()
-    yest = today - datetime.timedelta(days=1)
+    _today = datetime.date.today()
+    yest = _today - datetime.timedelta(days=1)
 
     return f'{yest} 00:00:00'
 
 
 def tomorrow():
-    today = datetime.date.today()
-    tomo = today + datetime.timedelta(days=1)
+    _today = datetime.date.today()
+    tomo = _today + datetime.timedelta(days=1)
 
     return f'{tomo} 00:00:00'
 

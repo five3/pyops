@@ -31,7 +31,11 @@ def test_flow(request, test_data):
     logger.info(f'run test_flow => [{module}.{cls}.{func}]')
     flow = get_flow_by_func_name(func, cls, module, request)
     for f in flow:
-        status = f(test_data)
+        if f.__code__.co_argcount == 2:
+            status = f(test_data, request)
+        else:
+            status = f(test_data)
+
         if status is False:
             test_data['result'] = False
             test_data['msg'] = f"execute flow {f.__name__} Failed."
@@ -56,7 +60,10 @@ def test_check(request, test_data):
     else:
         check = get_check_by_func_name(func, cls, module, request)
         for f in check:
-            assert f(test_data)
+            if f.__code__.co_argcount == 2:
+                assert f(test_data, request)
+            else:
+                assert f(test_data)
     logger.info(f'end test_check => [{module}.{cls}.{func}]')
 
     test_data['test_check'] = True
@@ -70,9 +77,13 @@ def init(request, test_data):
     module = request.module.__name__
 
     logger.info(f'run setup => [{module}.{cls}.{func}]')
-    init = get_init_by_func_name(func, cls, module, request)
+    init = get_init_by_name(cls, module, request)
     for f in init:
-        status = f(test_data)
+        if f.__code__.co_argcount == 2:
+            status = f(test_data, request)
+        else:
+            status = f(test_data)
+
         if status is False:
             raise ValueError(f"setup failed for [{module}.{cls}.{func}]")
     logger.info(f'end setup => [{module}.{cls}.{func}]')
@@ -91,9 +102,13 @@ def dest(request, test_data):
     module = request.module.__name__
 
     logger.info(f'run teardown => [{module}.{cls}.{func}]')
-    dest = get_dest_by_func_name(func, cls, module, request)
+    dest = get_dest_by_name(cls, module, request)
     for f in dest:
-        status = f(test_data)
+        if f.__code__.co_argcount == 2:
+            status = f(test_data, request)
+        else:
+            status = f(test_data)
+
         if status is False:
             raise ValueError(f"teardown failed for [{module}.{cls}.{func}]")
 
@@ -107,15 +122,18 @@ def class_init(request):
 
     logger.info(f'run setup_class => [{module}.{cls}]')
     dest = get_class_init_by_name(cls, module, request)
-    request.config.ah_class_config = {}
-    request.config.get_class_config = get_class_config
-    request.config.set_class_config = set_class_config
-    request.config.del_class_config = del_class_config
-    request.config.clear_class_config = clear_class_config
+    # 初始化全局设置
+    request.config.ah_class_config = get_global_config(cls, module, request)
+    # 绑定全局设置方法
+    request.get_global = get_class_config
+    request.set_global = set_class_config
+    request.del_global = del_class_config
+    request.clear_global = clear_class_config
+
     for f in dest:
         status = f(request)
         if status is False:
-            raise ValueError(f"teardown failed for [{module}.{cls}]")
+            raise ValueError(f"setup failed for [{module}.{cls}]")
 
     logger.info(f'end setup_class => [{module}.{cls}]')
 

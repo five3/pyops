@@ -1,7 +1,7 @@
 py-ops: 一款面向编程的Python关键字测试框架™
 ============================================
 
-.. image:: https://www.testqa.cn/static/banner.png
+.. image:: https://raw.githubusercontent.com/five3/pyops/master/image/testqa.png
 
 ☤ 说明
 ------
@@ -33,7 +33,7 @@ py-ops: 一款面向编程的Python关键字测试框架™
     pip install py-ops
 
 
-或者使用下面命令安装最细版：
+或者使用下面命令安装最新版：
 
 .. code:: bash
 
@@ -43,8 +43,105 @@ py-ops: 一款面向编程的Python关键字测试框架™
 ☤ 快速开始
 ----------
 
-使用该框架非常的方便，基本没有学习成本。首先新建一个目录作为自动化项目的根目录，
-然后再新建一个名为```ah_ext``的python包目录，并在``__init__.py``文件中编写如下内容。
+使用该框架非常的方便，基本没有学习成本。安装完成之后，在任意目录执行如下命令创建一个测试项目：
+
+.. code:: bash
+
+    pyops startproject test1
+
+
+命令执行完成之后，会在当前目录创建一个``test1``目录，具体的目录结构如下：
+
+.. code:: bash
+
+    |- test1
+        |-- ah_ext
+            |-- __init__.py
+        |-- demo.json
+
+
+接着在测试项目根目录(test1)执行如下命令运行测试：
+
+.. code:: bash
+
+    pyops run
+
+
+该命令默认会执行当前目录先全部的``json用例``文件，如果你希望只执行部分的``json用例``，则可以指定特定的文件名：
+
+.. code:: bash
+
+    pyops run demo.jsom demo2.json
+
+
+在执行完run命令后会在当前目录生成多个文件，具体的文件如下：
+
+.. code:: bash
+
+    |- test1
+        |-- ah_ext
+            |-- __init__.py
+        |-- demo.json
+        |-- demo.py
+        |-- pytest.ini
+        |-- report.html
+        |-- std.log
+
+
+其中``demo.py``是由json文件生成的同名用例文件，这个是执行测试流程中的产物，也是执行测试的真正入口点。
+``report.html``是测试报告，``std.log``则是测试的详细日志，``pytest.ini``自动生成的pytest配置文件。
+
+如果你希望单独生成一个py用例文件，可以使用下面的命令：
+
+.. code:: bash
+
+    pyops make demo.json
+
+
+json文件中还可以对象case配置disable字段，为true时则默认不会执行，不填时默认为false。
+如果期望强制运行disable为true的用例，可以使用forcerun命令。
+
+.. code:: bash
+
+    pyops forcerun
+
+
+☤ 框架设计结构
+--------------
+.. image:: https://raw.githubusercontent.com/five3/pyops/master/image/apic.png
+
+
+☤ 自动生成用例说明
+------------------
+自动生成的``demo.json``测试用例内容如下：
+
+.. code:: bash
+
+    {
+        "name": "TestDemo",
+        "desc": ".....background......",
+        "tag": "smoking_test",
+        "setup_class": [],
+        "teardown_class": [],
+        "setup": [],
+        "teardown": [],
+        "cases": {
+            "test_add": {
+                "desc": "",
+                "tags": [],
+                "data": {
+                    "x": 2,
+                    "y": 3,
+                    "expect": 5
+                },
+                "flow": ["调用add"],
+                "check": ["检查add"]
+            }
+        }
+    }
+
+
+自动生成的``ah_ext.__init__.py``文件内容如下：
 
 .. code:: python
 
@@ -72,57 +169,3 @@ py-ops: 一款面向编程的Python关键字测试框架™
             data: 即json配置文件中的case节点下对应data字典对象
         """
         return data['actual'] == data['expect']
-
-
-在该目录下新建一个``demo.json``文件，内容如下：
-
-.. code:: json
-
-    {
-        "name": "TestDemo",
-        "desc": ".....background......",
-        "tag": "smoking_test",
-        "setup_class": [],
-        "teardown_class": [],
-        "cases": {
-            "test_add": {
-                "desc": "",
-                "tags": [],
-                "setup": [],
-                "teardown": [],
-                "data": {
-                    "x": 2,
-                    "y": 3,
-                    "expect": 5
-                },
-                "flow": ["调用add"],
-                "check": ["检查add"]
-            }
-        }
-    }
-
-
-在项目根目录执行如下命令运行测试：
-
-.. code:: bash
-
-    pyops run
-
-该命令默认会执行当前目录先全部的``json用例``文件，如果你希望只执行部分的``json用例``，则可以指定特定的文件名：
-
-.. code:: bash
-
-    pyops run demo.jsom demo2.json
-
-另外，在执行完该命令后会在当前目录生成一个对应名称的py文件，如：``demo.py``。
-这个执行测试流程中的产物，也是执行测试的真正入口点。
-如果你希望单独生成一个py用例文件，可以使用下面的命令：
-
-.. code:: bash
-
-    pyops make demo.json
-
-
-☤ 框架设计结构
---------------
-.. image:: https://www.testqa.cn/static/banner.png
