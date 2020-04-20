@@ -77,18 +77,20 @@ def init(request, test_data):
     module = request.module.__name__
 
     logger.debug(f'run setup => [{module}.{cls}.{func}]')
-    init = get_init_by_name(cls, module, request)
-    for f in init:
-        if f.argcount == 2:
-            status = f(test_data, PyRequest(request))
-        else:
-            status = f(test_data)
+    if test_data.get('test_data'):
+        init = get_init_by_name(cls, module, request)
+        for f in init:
+            if f.argcount == 2:
+                status = f(test_data, PyRequest(request))
+            else:
+                status = f(test_data)
 
-        if status is False:
-            raise ValueError(f"setup failed for [{module}.{cls}.{func}]")
-    logger.debug(f'end setup => [{module}.{cls}.{func}]')
+            if status is False:
+                raise ValueError(f"setup failed for [{module}.{cls}.{func}]")
+        logger.debug(f'end setup => [{module}.{cls}.{func}]')
 
-    test_data['init'] = True
+        test_data['init'] = True
+
     yield None
 
 
@@ -102,15 +104,16 @@ def dest(request, test_data):
     module = request.module.__name__
 
     logger.debug(f'run teardown => [{module}.{cls}.{func}]')
-    dest = get_dest_by_name(cls, module, request)
-    for f in dest:
-        if f.argcount == 2:
-            status = f(test_data, PyRequest(request))
-        else:
-            status = f(test_data)
+    if test_data.get('test_data'):
+        dest = get_dest_by_name(cls, module, request)
+        for f in dest:
+            if f.argcount == 2:
+                status = f(test_data, PyRequest(request))
+            else:
+                status = f(test_data)
 
-        if status is False:
-            raise ValueError(f"teardown failed for [{module}.{cls}.{func}]")
+            if status is False:
+                raise ValueError(f"teardown failed for [{module}.{cls}.{func}]")
 
     logger.debug(f'end teardown => [{module}.{cls}.{func}]')
 
