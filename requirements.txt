@@ -1,5 +1,5 @@
 Jinja2==2.10.1
-requests==2.19.1
+requests==2.20.0
 records==0.5.3
 redis==2.10.6
 pytest==5.0.1
