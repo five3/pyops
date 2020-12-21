@@ -1,16 +1,15 @@
 {
   "name": "TestDemo",
   "desc": "background",
-  "tag": "clues",
+  "tag": "smoking",
   "setup_class": ["套件初始化"],
   "teardown_class": ["ah_ext.sub_teardown_class"],
-  "test_path": [],
+  "setup": ["用例初始化"],
+  "teardown": ["用例清理"],
   "cases": {
     "test_001": {
       "desc": "关键字场景样例，前提是需要给对应的函数加上@alias装饰器",
       "tags": [""],
-      "setup": ["用例初始化"],
-      "teardown": ["用例清理"],
       "data": "sub测试数据",
       "flow": ["调用sub"],
       "check": ["默认检查"]
@@ -18,8 +17,6 @@
     "test_002": {
       "desc": "函数路径场景样例，这种方式是默认支持的，这里的每一个函数路径与test_001中的关键字是等效的",
       "tags": [""],
-      "setup": ["ah_ext.setup"],
-      "teardown": ["ah_ext.teardown"],
       "data": {
         "x": 5,
         "y": 1,

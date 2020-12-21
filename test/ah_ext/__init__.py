@@ -16,8 +16,8 @@ def add(x, y):
 
 
 @make_flow
-def call_add(data):
-    data['actual'] = add(data['x'], data['y'])
+def call_add(init_data, run_data, global_data):
+    run_data['actual'] = add(init_data['x'], init_data['y'])
 
 
 @alias('sub测试数据')
@@ -32,20 +32,20 @@ def sub_data(req):
 
 @alias('调用sub')
 @make_flow
-def call_sub(data):
-    data['actual'] = sub(data['x'], data['y'])
+def call_sub(int_data, run_data, global_data):
+    run_data['actual'] = sub(int_data['x'], int_data['y'])
 
 
-@alias("用例初始化")
+@alias('用例初始化')
 @make_setup
-def setup(data):
-    print(f'test_data print in setup {data}')
+def sub_setup(int_data, global_data):
+    print(f'test_data print in setup {global_data}')
 
 
-@alias("用例清理")
+@alias('用例清理')
 @make_teardown
-def teardown(data):
-    print(f'test_data print in teardown {data}')
+def sub_teardown(int_data, global_data):
+    print(f'test_data print in teardown {global_data}')
 
 
 @alias('套件初始化')

@@ -17,6 +17,10 @@ def make(key='flow'):
             wrapper.ah_type.append(key)
         else:
             wrapper.ah_type = [key]
+
+        if key in ['flow', 'check', 'setup', 'teardown']:
+            wrapper.argcount = func.__code__.co_argcount
+
         return wrapper
 
     return make_key

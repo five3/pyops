@@ -63,11 +63,67 @@ markers = {% for tag in tags %}
 {% endfor %}
 """
 
+__JSON_TMPL__ = """{
+    "name": "TestDemo",
+    "desc": ".....background......",
+    "tag": "smoking_test",
+    "setup_class": [],
+    "teardown_class": [],
+    "setup": [],
+    "teardown": [],
+    "cases": {
+        "test_add": {
+            "desc": "",
+            "tags": [],
+            "data": {
+                "x": 2,
+                "y": 3,
+                "expect": 5
+            },
+            "flow": ["调用add"],
+            "check": ["检查add"]
+        }
+    }
+}
+"""
+
+__INIT_TMPL__ = '''import logging
+from pyops.decorator import (make_check, make_flow, alias)
+
+logger = logging.getLogger()
+
+def add(x, y):
+    print('add')
+    return x + y
+
+@alias('调用add')
+@make_flow
+def call_add(init_data, run_data, global_data):
+    """
+        init_data: 即json配置文件中的case节点下对应data字典对象
+    """
+    run_data['actual'] = add(init_data['x'], int_data['y'])
+
+@alias('检查add')
+@make_check
+def check(init_data, run_data, global_data):
+    """
+        init_data: 即json配置文件中的case节点下对应data字典对象
+    """
+    return run_data['actual'] == init_data['expect']
+'''
+
 
 def run(args):
     case_files = make(args)
     args = ["pytest"] + case_files + ["-s", "--force_run", "--pytest_report", "report.html"]
-    p = subprocess.call(args)
+    subprocess.call(args)
+
+
+def force_run(args):
+    case_files = make(args)
+    args = ["pytest"] + case_files + ["-s", "--force_run", "--pytest_report", "report.html"]
+    subprocess.call(args)
 
 
 def make(args):
@@ -101,6 +157,21 @@ def make(args):
     return case_files
 
 
+def start_project(args):
+    project_name = args[1]
+
+    os.makedirs(project_name)
+    os.makedirs(os.path.join(project_name, 'ah_ext'))
+
+    with open(os.path.join(project_name, 'ah_ext', '__init__.py'), 'w', encoding='utf-8') as f:
+        f.write(__INIT_TMPL__)
+
+    with open(os.path.join(project_name, 'demo.json'), 'w', encoding='utf-8') as f:
+        f.write(__JSON_TMPL__)
+
+    print(f'创建项目 {project_name} 成功!')
+
+
 def get_files():
     sub_files = os.listdir(os.getcwd())
     return [sub_file for sub_file in sub_files if sub_file.endswith('json')]
@@ -112,7 +183,7 @@ def gen_template_file(data, temp_str):
 
 
 def main():
-    usage = "usage: pyops run|make"
+    usage = "usage: pyops run|make|forcerun|startproject projectname"
     op = optparse.OptionParser(usage=usage)
     option, args = op.parse_args()
 
@@ -125,6 +196,14 @@ def main():
         run(args)
     elif action == 'make':
         make(args)
+    elif action == 'forcerun':
+        force_run(args)
+    elif action == 'startproject':
+        if len(args) < 2:
+            print('[ERROR] startproject common must have a arg')
+            op.print_help()
+        else:
+            start_project(args)
     else:
         op.print_help()
 
