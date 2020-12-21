@@ -127,25 +127,25 @@ def get_global_config(cls, module, req):
     return cls_info.get('env', {}) if cls_info else {}
 
 
-def get_class_config(self, key):
-    ah_config = getattr(self.config, 'ah_class_config')
+def get_class_config(req, key):
+    ah_config = getattr(req.config, 'ah_class_config')
     if ah_config:
         return ah_config.get(key)
 
 
-def set_class_config(self, key, value):
-    ah_config = getattr(self.config, 'ah_class_config')
+def set_class_config(req, key, value):
+    ah_config = getattr(req.config, 'ah_class_config')
     if ah_config:
         ah_config[key] = value
 
 
-def del_class_config(self, key):
-    ah_config = getattr(self.config, 'ah_class_config')
+def del_class_config(req, key):
+    ah_config = getattr(req.config, 'ah_class_config')
     if key in ah_config:
         del ah_config[key]
 
 
-def clear_class_config(self):
-    ah_config = getattr(self.config, 'ah_class_config')
+def clear_class_config(req):
+    ah_config = getattr(req.config, 'ah_class_config')
     if ah_config:
         ah_config = {}

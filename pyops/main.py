@@ -74,15 +74,16 @@ def init(request, test_data):
     module = request.module.__name__
 
     logger.info(f'run setup => [{module}.{cls}.{func}]')
-    init = get_init_by_name(cls, module, request)
-    for f in init:
-        status = f(test_data['init_data'], test_data)
+    if test_data.get('init_data'):
+        init = get_init_by_name(cls, module, request)
+        for f in init:
+            status = f(test_data['init_data'], test_data)
 
-        if status is False:
-            raise ValueError(f"setup failed for [{module}.{cls}.{func}]")
-    logger.info(f'end setup => [{module}.{cls}.{func}]')
+            if status is False:
+                raise ValueError(f"setup failed for [{module}.{cls}.{func}]")
+        logger.info(f'end setup => [{module}.{cls}.{func}]')
 
-    test_data['status']['init_done'] = True
+        test_data['status']['init_done'] = True
     yield None
 
 
@@ -96,12 +97,13 @@ def dest(request, test_data):
     module = request.module.__name__
 
     logger.info(f'run teardown => [{module}.{cls}.{func}]')
-    dest = get_dest_by_name(cls, module, request)
-    for f in dest:
-        status = f(test_data['init_data'], test_data)
+    if test_data.get('init_data'):
+        dest = get_dest_by_name(cls, module, request)
+        for f in dest:
+            status = f(test_data['init_data'], test_data)
 
-        if status is False:
-            raise ValueError(f"teardown failed for [{module}.{cls}.{func}]")
+            if status is False:
+                raise ValueError(f"teardown failed for [{module}.{cls}.{func}]")
 
     logger.info(f'end teardown => [{module}.{cls}.{func}]')
 
