@@ -5,7 +5,7 @@ import optparse
 import subprocess
 from logging.config import dictConfig
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 dictConfig({
